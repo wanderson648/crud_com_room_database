@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="DesignSurface">
+    <option name="filePathToZoomLevelMap">
+      <map>
+        <entry key="..\:/Users/wanderson/Desktop/Orgs/app/src/main/res/drawable-v24/ic_launcher_foreground.xml" value="0.1065" />
+        <entry key="..\:/Users/wanderson/Desktop/Orgs/app/src/main/res/drawable/detail_price.xml" value="0.1865" />
+        <entry key="..\:/Users/wanderson/Desktop/Orgs/app/src/main/res/drawable/ic_add.xml" value="0.1705" />
+        <entry key="..\:/Users/wanderson/Desktop/Orgs/app/src/main/res/drawable/ic_launcher_background.xml" value="0.1705" />
+        <entry key="..\:/Users/wanderson/Desktop/Orgs/app/src/main/res/drawable/ic_refresh.xml" value="0.1065" />
+        <entry key="..\:/Users/wanderson/Desktop/Orgs/app/src/main/res/drawable/placeholder.xml" value="0.161" />
+        <entry key="..\:/Users/wanderson/Desktop/Orgs/app/src/main/res/font/montserrat.xml" value="0.19722222222222222" />
+        <entry key="..\:/Users/wanderson/Desktop/Orgs/app/src/main/res/layout/activity_detail.xml" value="0.25" />
+        <entry key="..\:/Users/wanderson/Desktop/Orgs/app/src/main/res/layout/activity_form_product.xml" value="0.25" />
+        <entry key="..\:/Users/wanderson/Desktop/Orgs/app/src/main/res/layout/activity_list_product.xml" value="0.20625" />
+        <entry key="..\:/Users/wanderson/Desktop/Orgs/app/src/main/res/layout/activity_main.xml" value="0.25" />
+        <entry key="..\:/Users/wanderson/Desktop/Orgs/app/src/main/res/layout/form_image.xml" value="0.33" />
+        <entry key="..\:/Users/wanderson/Desktop/Orgs/app/src/main/res/layout/form_image_url.xml" value="0.20625" />
+        <entry key="..\:/Users/wanderson/Desktop/Orgs/app/src/main/res/layout/product_item.xml" value="0.33" />
+        <entry key="..\:/Users/wanderson/Desktop/Orgs/app/src/main/res/menu/menu_details_product.xml" value="0.25" />
+      </map>
+    </option>
+  </component>
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_11" default="true" project-jdk-name="Android Studio default JDK" project-jdk-type="JavaSDK">
+    <output url="file://$PROJECT_DIR$/build/classes" />
+  </component>
+  <component name="ProjectType">
+    <option name="id" value="Android" />
+  </component>
+</project>

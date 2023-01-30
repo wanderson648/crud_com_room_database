@@ -1,0 +1,15 @@
+<resources>
+    <string name="app_name">Orgs</string>
+    <string name="basket_fruits">Cesto de frutas</string>
+    <string name="price">19.99</string>
+    <string name="list_of_fruits">Laranja, manga e abacaxi</string>
+    <string name="description">Basket of fruits</string>
+    <string name="save">Salvar</string>
+    <string name="refresh">Carregar</string>
+    <string name="confirm">Confirmar</string>
+    <string name="cancel">Cancelar</string>
+    <string name="menu_edit">Editar</string>
+    <string name="menu_delete">Deletar</string>
+    <string name="save_product">Cadastrar produto</string>
+    <string name="update_product">Alterar produto</string>
+</resources>
