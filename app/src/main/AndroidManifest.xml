@@ -17,7 +17,8 @@
         tools:targetApi="32">
         <activity
             android:name=".ui.view.DetailActivity"
-            android:exported="false"/>
+            android:exported="false"
+            android:parentActivityName=".ui.view.ListProductActivity"/>
         <activity
             android:name=".ui.view.FormProductActivity"
             android:exported="false"

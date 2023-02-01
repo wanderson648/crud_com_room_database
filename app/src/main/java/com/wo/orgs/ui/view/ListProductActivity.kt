@@ -44,9 +44,7 @@ class ListProductActivity : AppCompatActivity() {
             adapter.updateList(products)
         }
 
-
     }
-
     private fun setupFab() {
         val fab = binding.fab
         fab.setOnClickListener {

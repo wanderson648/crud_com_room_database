@@ -9,21 +9,23 @@ import com.wo.orgs.databinding.ActivityFormProductBinding
 import com.wo.orgs.dialog.FormImageDialog
 import com.wo.orgs.extensions.tryRefreshImage
 import com.wo.orgs.model.Product
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import java.math.BigDecimal
 
 class FormProductActivity : AppCompatActivity() {
 
     private var productId: Long = 0L
-
     private val binding by lazy {
         ActivityFormProductBinding.inflate(layoutInflater)
     }
-
     private val productDao by lazy {
         AppDatabase.getInstance(this).productDao()
     }
-
     private var url: String? = null
+    private val scope = CoroutineScope(Dispatchers.IO)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -48,9 +50,14 @@ class FormProductActivity : AppCompatActivity() {
 
 
     private fun tryGetProduct() {
-        productDao.getById(productId)?.let {
-            title = getString(R.string.update_product)
-            fillFields(it)
+        // using coroutines
+        scope.launch {
+            productDao.getById(productId)?.let {
+               withContext(Dispatchers.Main) {
+                   title = getString(R.string.update_product)
+                   fillFields(it)
+               }
+            }
         }
     }
 
@@ -77,10 +84,10 @@ class FormProductActivity : AppCompatActivity() {
             val btnSave = btnSave
 
             btnSave.setOnClickListener {
-                productDao.saveProduct(
-                    saveOrUpdateProduct(name, desc, amount)
-                )
-                finish()
+                scope.launch {
+                    productDao.saveProduct(saveOrUpdateProduct(name, desc, amount))
+                    finish()
+                }
             }
         }
     }

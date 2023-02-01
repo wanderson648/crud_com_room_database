@@ -2,7 +2,6 @@ package com.wo.orgs.ui.view
 
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
@@ -12,19 +11,24 @@ import com.wo.orgs.databinding.ActivityDetailBinding
 import com.wo.orgs.extensions.formatterToCoinBrazil
 import com.wo.orgs.extensions.tryRefreshImage
 import com.wo.orgs.model.Product
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers.IO
+import kotlinx.coroutines.Dispatchers.Main
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 class DetailActivity : AppCompatActivity() {
 
     private var product: Product? = null
     private var productId: Long = 0L
-
     private val binding by lazy {
         ActivityDetailBinding.inflate(layoutInflater)
     }
-
     private val productDao by lazy {
         AppDatabase.getInstance(this).productDao()
     }
+    private val scope = CoroutineScope(IO)
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -38,10 +42,14 @@ class DetailActivity : AppCompatActivity() {
     }
 
     private fun getProduct() {
-        product = productDao.getById(productId)
-        product?.let {
-            fillFields(it)
-        } ?: finish()
+        scope.launch {
+            product = productDao.getById(productId)
+            withContext(Main) {
+                product?.let {
+                    fillFields(it)
+                } ?: finish()
+            }
+        }
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
@@ -52,8 +60,10 @@ class DetailActivity : AppCompatActivity() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
             R.id.menu_delete -> {
-                product?.let { productDao.delete(it) }
-                finish()
+                scope.launch {
+                    product?.let { productDao.delete(it) }
+                    finish()
+                }
             }
             R.id.menu_edit -> {
                 Intent(this, FormProductActivity::class.java).apply {
