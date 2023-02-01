@@ -2,6 +2,7 @@ package com.wo.orgs.ui.view
 
 import android.content.Intent
 import android.os.Bundle
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -9,19 +10,16 @@ import com.wo.orgs.R
 import com.wo.orgs.database.AppDatabase
 import com.wo.orgs.databinding.ActivityListProductBinding
 import com.wo.orgs.ui.adapter.ListProductAdapter
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.MainScope
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
+import kotlinx.coroutines.*
 
 class ListProductActivity : AppCompatActivity() {
 
     private lateinit var rvProduct: RecyclerView
     private val adapter = ListProductAdapter(this)
-
     private val binding by lazy {
         ActivityListProductBinding.inflate(layoutInflater)
     }
+    private val scope = MainScope()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -35,16 +33,26 @@ class ListProductActivity : AppCompatActivity() {
         val db = AppDatabase.getInstance(this)
         val productDao = db.productDao()
 
+        val handler = CoroutineExceptionHandler { coroutineContext, throwable ->
+            Toast.makeText(
+                this@ListProductActivity,
+                "onResume $throwable",
+                Toast.LENGTH_SHORT
+            ).show()
+        }
         // using coroutines
-        val scope = MainScope()
-        scope.launch {
+        scope.launch(handler) {
+            MainScope().launch(handler) {
+                throw Exception("lançando exception na coroutine em outro scope")
+            }
+            throw IllegalStateException("lançando exception na coroutine")
             val products = withContext(Dispatchers.IO) {
                 productDao.getAllProducts()
             }
             adapter.updateList(products)
         }
-
     }
+
     private fun setupFab() {
         val fab = binding.fab
         fab.setOnClickListener {
