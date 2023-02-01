@@ -9,6 +9,10 @@ import com.wo.orgs.R
 import com.wo.orgs.database.AppDatabase
 import com.wo.orgs.databinding.ActivityListProductBinding
 import com.wo.orgs.ui.adapter.ListProductAdapter
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.MainScope
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 class ListProductActivity : AppCompatActivity() {
 
@@ -30,7 +34,17 @@ class ListProductActivity : AppCompatActivity() {
         super.onResume()
         val db = AppDatabase.getInstance(this)
         val productDao = db.productDao()
-        adapter.updateList(productDao.getAllProducts())
+
+        // using coroutines
+        val scope = MainScope()
+        scope.launch {
+            val products = withContext(Dispatchers.IO) {
+                productDao.getAllProducts()
+            }
+            adapter.updateList(products)
+        }
+
+
     }
 
     private fun setupFab() {
