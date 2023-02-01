@@ -2,12 +2,13 @@ package com.wo.orgs.database.dao
 
 import androidx.room.*
 import com.wo.orgs.model.Product
+import kotlinx.coroutines.flow.Flow
 
 @Dao
 interface ProductDAO {
 
     @Query("SELECT * FROM Product")
-    suspend fun getAllProducts(): List<Product>
+    fun getAllProducts(): Flow<List<Product>>
 
 //    @Insert
 //    fun saveProduct(vararg product: Product)

@@ -24,22 +24,17 @@ class ListProductActivity : AppCompatActivity() {
     private val productDao by lazy {
         AppDatabase.getInstance(this).productDao()
     }
-
-    private val scope = MainScope()
-
+    
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
         setupRecyclerView()
         setupFab()
-    }
-
-    override fun onResume() {
-        super.onResume()
-        // using coroutines
+        // using flow
         lifecycleScope.launch {
-            val products = productDao.getAllProducts()
-            adapter.updateList(products)
+            productDao.getAllProducts().collect { products ->
+                adapter.updateList(products)
+            }
         }
     }
 
