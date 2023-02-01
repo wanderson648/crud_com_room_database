@@ -2,6 +2,7 @@ package com.wo.orgs.ui.view
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.lifecycleScope
 import com.google.android.material.textfield.TextInputEditText
 import com.wo.orgs.R
 import com.wo.orgs.database.AppDatabase

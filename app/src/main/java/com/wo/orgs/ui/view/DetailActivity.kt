@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.lifecycleScope
 import com.wo.orgs.R
 import com.wo.orgs.database.AppDatabase
 import com.wo.orgs.databinding.ActivityDetailBinding

@@ -4,11 +4,13 @@ import android.content.Intent
 import android.os.Bundle
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.wo.orgs.R
 import com.wo.orgs.database.AppDatabase
 import com.wo.orgs.databinding.ActivityListProductBinding
+import com.wo.orgs.model.Product
 import com.wo.orgs.ui.adapter.ListProductAdapter
 import kotlinx.coroutines.*
 
@@ -19,6 +21,10 @@ class ListProductActivity : AppCompatActivity() {
     private val binding by lazy {
         ActivityListProductBinding.inflate(layoutInflater)
     }
+    private val productDao by lazy {
+        AppDatabase.getInstance(this).productDao()
+    }
+
     private val scope = MainScope()
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -30,25 +36,9 @@ class ListProductActivity : AppCompatActivity() {
 
     override fun onResume() {
         super.onResume()
-        val db = AppDatabase.getInstance(this)
-        val productDao = db.productDao()
-
-        val handler = CoroutineExceptionHandler { coroutineContext, throwable ->
-            Toast.makeText(
-                this@ListProductActivity,
-                "onResume $throwable",
-                Toast.LENGTH_SHORT
-            ).show()
-        }
         // using coroutines
-        scope.launch(handler) {
-            MainScope().launch(handler) {
-                throw Exception("lançando exception na coroutine em outro scope")
-            }
-            throw IllegalStateException("lançando exception na coroutine")
-            val products = withContext(Dispatchers.IO) {
-                productDao.getAllProducts()
-            }
+        lifecycleScope.launch {
+            val products = productDao.getAllProducts()
             adapter.updateList(products)
         }
     }
